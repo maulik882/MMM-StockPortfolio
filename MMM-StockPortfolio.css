@@ -1,0 +1,104 @@
+.stock-portfolio-wrapper {
+    padding: 10px;
+    font-family: 'Roboto', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Summary Cards */
+.summary-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.summary-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.summary-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.card-label {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+}
+
+.card-value {
+    font-weight: 500;
+}
+
+/* Table Design */
+.stock-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+}
+
+.stock-table th {
+    text-align: left;
+    padding: 10px;
+    color: #888;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stock-table td {
+    padding: 12px 10px;
+    background: rgba(255, 255, 255, 0.02);
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+}
+
+.stock-table tr td:first-child {
+    border-left: 1px solid transparent;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.stock-table tr td:last-child {
+    border-right: 1px solid transparent;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.stock-symbol {
+    font-weight: 600;
+    font-size: 1.1em;
+}
+
+.stock-name {
+    display: block;
+    margin-top: 2px;
+}
+
+/* Profit / Loss Colors */
+.positive {
+    color: #4cd137 !important;
+}
+
+.negative {
+    color: #e84118 !important;
+}
+
+/* Highlight Row on Hover (Subtle) */
+.stock-table tr:hover td {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+/* Animation for updates */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.stock-portfolio-wrapper {
+    animation: fadeIn 0.5s ease-out;
+}
