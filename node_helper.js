@@ -7,59 +7,34 @@ module.exports = NodeHelper.create({
     },
 
     socketNotificationReceived: function (notification, payload) {
-        console.log('[MMM-StockPortfolio] Helper received notification: ' + notification);
-        if (notification === 'GET_STOCK_DATA') {
+        if (notification === "GET_STOCK_DATA") {
             this.config = payload;
-            console.log('[MMM-StockPortfolio] Config URL: ' + (this.config ? this.config.sheetUrl : 'MISSING'));
             this.fetchData();
         }
     },
 
     async fetchData() {
-        console.log('[MMM-StockPortfolio] Entering fetchData()');
         try {
-            if (!this.config || !this.config.sheetUrl) {
-                console.error('[MMM-StockPortfolio] Error: No sheetUrl provided in config!');
-                return;
-            }
+            if (!this.config || !this.config.sheetUrl) return;
 
-            console.log('[MMM-StockPortfolio] Fetching from: ' + this.config.sheetUrl);
             const response = await fetch(this.config.sheetUrl);
-            console.log('[MMM-StockPortfolio] Response status: ' + response.status);
 
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
             const csvData = await response.text();
-            console.log('[MMM-StockPortfolio] Received CSV data. Length: ' + csvData.length);
-
-            if (csvData.length < 10) {
-                console.warn('[MMM-StockPortfolio] Warning: CSV data too small: ' + csvData);
-            }
-
-            console.log('[MMM-StockPortfolio] Parsing CSV...');
             const records = parse(csvData, {
                 columns: false,
                 skip_empty_lines: true,
                 trim: true
             });
-            console.log('[MMM-StockPortfolio] Parsed records: ' + records.length);
 
-            if (records.length > 0) {
-                console.log('[MMM-StockPortfolio] Row 0: ' + JSON.stringify(records[0]));
-            }
-
-            console.log('[MMM-StockPortfolio] Processing records...');
             const processedData = this.processRecords(records);
-            console.log('[MMM-StockPortfolio] Processed. Summary keys: ' + Object.keys(processedData.summary).filter(k => processedData.summary[k]).join(', '));
-            console.log('[MMM-StockPortfolio] Stocks found: ' + processedData.stocks.length);
-
-            this.sendSocketNotification('STOCK_DATA', processedData);
-            console.log('[MMM-StockPortfolio] Notification sent back to frontend.');
+            this.sendSocketNotification("STOCK_DATA", processedData);
         } catch (error) {
-            console.error('[MMM-StockPortfolio] FETCH ERROR: ' + error.message);
-            this.sendSocketNotification('ERROR', error.message);
+            console.error("[MMM-StockPortfolio] Fetch Error: " + error.message);
+            this.sendSocketNotification("ERROR", error.message);
         }
     },
 
