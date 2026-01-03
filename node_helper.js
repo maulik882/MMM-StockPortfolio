@@ -1,17 +1,16 @@
-'use strict';
-
 const NodeHelper = require('node_helper');
-const axios = require('axios');
 const { parse } = require('csv-parse/sync');
 
 module.exports = NodeHelper.create({
     start: function () {
-        console.log('Starting node helper for: ' + this.name);
+        console.log('MMM-StockPortfolio: Starting node helper for: ' + this.name);
     },
 
     socketNotificationReceived: function (notification, payload) {
+        console.log('MMM-StockPortfolio: Helper received notification:', notification);
         if (notification === 'GET_STOCK_DATA') {
             this.config = payload;
+            console.log('MMM-StockPortfolio: Config URL is:', this.config.sheetUrl);
             this.fetchData();
         }
     },
@@ -19,9 +18,20 @@ module.exports = NodeHelper.create({
     async fetchData() {
         try {
             console.log('MMM-StockPortfolio: Fetching data from:', this.config.sheetUrl);
-            const response = await axios.get(this.config.sheetUrl);
-            const csvData = response.data;
+
+            // Using native fetch (available in Node 22+)
+            const response = await fetch(this.config.sheetUrl);
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const csvData = await response.text();
             console.log('MMM-StockPortfolio: Data received, length:', csvData.length);
+
+            if (csvData.length < 10) {
+                console.warn('MMM-StockPortfolio: Received data is too short, check CSV URL.');
+            }
 
             const records = parse(csvData, {
                 columns: false,
