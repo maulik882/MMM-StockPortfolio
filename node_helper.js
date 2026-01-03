@@ -7,47 +7,58 @@ module.exports = NodeHelper.create({
     },
 
     socketNotificationReceived: function (notification, payload) {
-        console.log('MMM-StockPortfolio: Helper received notification:', notification);
+        console.log('[MMM-StockPortfolio] Helper received notification: ' + notification);
         if (notification === 'GET_STOCK_DATA') {
             this.config = payload;
-            console.log('MMM-StockPortfolio: Config URL is:', this.config.sheetUrl);
+            console.log('[MMM-StockPortfolio] Config URL: ' + (this.config ? this.config.sheetUrl : 'MISSING'));
             this.fetchData();
         }
     },
 
     async fetchData() {
+        console.log('[MMM-StockPortfolio] Entering fetchData()');
         try {
-            console.log('MMM-StockPortfolio: Fetching data from:', this.config.sheetUrl);
+            if (!this.config || !this.config.sheetUrl) {
+                console.error('[MMM-StockPortfolio] Error: No sheetUrl provided in config!');
+                return;
+            }
 
-            // Using native fetch (available in Node 22+)
+            console.log('[MMM-StockPortfolio] Fetching from: ' + this.config.sheetUrl);
             const response = await fetch(this.config.sheetUrl);
+            console.log('[MMM-StockPortfolio] Response status: ' + response.status);
 
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
             const csvData = await response.text();
-            console.log('MMM-StockPortfolio: Data received, length:', csvData.length);
+            console.log('[MMM-StockPortfolio] Received CSV data. Length: ' + csvData.length);
 
             if (csvData.length < 10) {
-                console.warn('MMM-StockPortfolio: Received data is too short, check CSV URL.');
+                console.warn('[MMM-StockPortfolio] Warning: CSV data too small: ' + csvData);
             }
 
+            console.log('[MMM-StockPortfolio] Parsing CSV...');
             const records = parse(csvData, {
                 columns: false,
                 skip_empty_lines: true,
                 trim: true
             });
-            console.log('MMM-StockPortfolio: Parsed records count:', records.length);
+            console.log('[MMM-StockPortfolio] Parsed records: ' + records.length);
+
             if (records.length > 0) {
-                console.log('MMM-StockPortfolio: First 3 records:', JSON.stringify(records.slice(0, 3)));
+                console.log('[MMM-StockPortfolio] Row 0: ' + JSON.stringify(records[0]));
             }
 
+            console.log('[MMM-StockPortfolio] Processing records...');
             const processedData = this.processRecords(records);
-            console.log('MMM-StockPortfolio: Data processed successfully. Stocks count:', processedData.stocks.length);
+            console.log('[MMM-StockPortfolio] Processed. Summary keys: ' + Object.keys(processedData.summary).filter(k => processedData.summary[k]).join(', '));
+            console.log('[MMM-StockPortfolio] Stocks found: ' + processedData.stocks.length);
+
             this.sendSocketNotification('STOCK_DATA', processedData);
+            console.log('[MMM-StockPortfolio] Notification sent back to frontend.');
         } catch (error) {
-            console.error('MMM-StockPortfolio: Error fetching/parsing data:', error.message);
+            console.error('[MMM-StockPortfolio] FETCH ERROR: ' + error.message);
             this.sendSocketNotification('ERROR', error.message);
         }
     },
