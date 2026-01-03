@@ -15,10 +15,15 @@ Module.register("MMM-StockPortfolio", {
     },
 
     start: function () {
-        Log.info("Starting module: " + this.name);
+        Log.info("MMM-StockPortfolio: Starting module: " + this.name);
         this.stockData = null;
         this.loaded = false;
-        this.getStockData(); // Fetch immediately on start
+
+        // Delay initial fetch to ensure socket is ready
+        setTimeout(() => {
+            Log.info("MMM-StockPortfolio: Triggering initial data fetch...");
+            this.getStockData();
+        }, 2000);
     },
 
     scheduleUpdate: function (delay) {

@@ -44,7 +44,7 @@ module.exports = NodeHelper.create({
             }
 
             const processedData = this.processRecords(records);
-            console.log('MMM-StockPortfolio: Data processed successfully');
+            console.log('MMM-StockPortfolio: Data processed successfully. Stocks count:', processedData.stocks.length);
             this.sendSocketNotification('STOCK_DATA', processedData);
         } catch (error) {
             console.error('MMM-StockPortfolio: Error fetching/parsing data:', error.message);
