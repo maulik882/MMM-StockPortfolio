@@ -39,6 +39,9 @@ module.exports = NodeHelper.create({
                 trim: true
             });
             console.log('MMM-StockPortfolio: Parsed records count:', records.length);
+            if (records.length > 0) {
+                console.log('MMM-StockPortfolio: First 3 records:', JSON.stringify(records.slice(0, 3)));
+            }
 
             const processedData = this.processRecords(records);
             console.log('MMM-StockPortfolio: Data processed successfully');
