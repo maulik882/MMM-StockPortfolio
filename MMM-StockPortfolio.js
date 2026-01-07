@@ -7,7 +7,8 @@ Module.register("MMM-StockPortfolio", {
         currencySymbol: "₹",
         showSummary: true,
         showTable: true,
-        maxWidth: "100%"
+        maxWidth: "100%",
+        tableColumns: ["Symbol", "Avg Price", "Current", "Change %", "P& L"]
     },
 
     getStyles: function () {
@@ -122,6 +123,14 @@ Module.register("MMM-StockPortfolio", {
         return container;
     },
 
+    // Helper to convert header to the key format used by node_helper
+    getHeaderKey: function (header) {
+        return header.toLowerCase()
+            .replace(/[\(\)%]/g, '')
+            .replace(/[^a-z0-9]+/g, '_')
+            .replace(/^_+|_+$/g, '');
+    },
+
     buildTableUI: function (stocks) {
         const table = document.createElement("table");
         table.className = "stock-table small";
@@ -129,11 +138,12 @@ Module.register("MMM-StockPortfolio", {
         // Header
         const thead = document.createElement("thead");
         const headerRow = document.createElement("tr");
-        const headers = ["Symbol", "Avg Price", "Current", "Change %", "P& L"];
 
-        headers.forEach(h => {
+        const columns = this.config.tableColumns || ["Symbol", "Avg Price", "Current", "Change %", "P& L"];
+
+        columns.forEach(col => {
             const th = document.createElement("th");
-            th.innerText = h;
+            th.innerText = col;
             headerRow.appendChild(th);
         });
         thead.appendChild(headerRow);
@@ -144,42 +154,42 @@ Module.register("MMM-StockPortfolio", {
         stocks.forEach(stock => {
             const tr = document.createElement("tr");
 
-            // Symbol & Name (Combined for a cleaner UI)
-            const tdSymbol = document.createElement("td");
-            tdSymbol.innerHTML = `<span class="stock-symbol bright">${stock.symbol}</span><br/><span class="stock-name xsmall dimmed">${stock.stock_name || ""}</span>`;
-            tr.appendChild(tdSymbol);
+            columns.forEach(col => {
+                const td = document.createElement("td");
+                const key = this.getHeaderKey(col);
 
-            // Avg Price
-            const tdAvg = document.createElement("td");
-            tdAvg.innerText = stock.average_price || "-";
-            tr.appendChild(tdAvg);
+                // Default mapping for common fields if not found by exact key
+                let value = stock[key];
 
-            // Current Price
-            const tdCurrent = document.createElement("td");
-            tdCurrent.innerText = stock.current_value_per_share || stock.current_value || "-";
-            tr.appendChild(tdCurrent);
+                // Handle special cases for fallback or mapping logic
+                if (key === "symbol") {
+                    td.innerHTML = `<span class="stock-symbol bright">${stock.symbol}</span><br/><span class="stock-name xsmall dimmed">${stock.stock_name || stock.stockname || ""}</span>`;
+                } else {
+                    // Specific fallbacks for common alternative headers
+                    if (value === undefined || value === "") {
+                        if (key === "avg_price") value = stock["average_price"];
+                        if (key === "current") value = stock["current_value_per_share"] || stock["current_value"];
+                        if (key === "change") value = stock["change_percent"] || stock["change_"];
+                        if (key === "p_l") value = stock["profit_loss"] || stock["p_l"];
+                    }
 
-            // Change %
-            const tdChange = document.createElement("td");
-            const changeVal = stock.change || stock.change_percent || "";
-            tdChange.innerText = changeVal;
-            if (changeVal.includes("-")) {
-                tdChange.classList.add("negative");
-            } else if (changeVal && changeVal !== "0%") {
-                tdChange.classList.add("positive");
-            }
-            tr.appendChild(tdChange);
+                    td.innerText = value || "-";
 
-            // Profit & Loss
-            const tdPL = document.createElement("td");
-            const plVal = stock.profit_loss || "";
-            tdPL.innerText = plVal;
-            if (plVal.includes("-")) {
-                tdPL.classList.add("negative");
-            } else if (plVal && plVal !== "0") {
-                tdPL.classList.add("positive");
-            }
-            tr.appendChild(tdPL);
+                    // Apply coloring for values that indicate change/performance
+                    if (typeof value === "string") {
+                        if (value.includes("-")) {
+                            td.classList.add("negative");
+                        } else if (value.includes("%") && value !== "0%" || (key.includes("change") || key.includes("p_l") || key.includes("profit")) && value !== "0" && value !== "") {
+                            // Basic heuristic for positive values
+                            if (!value.includes("-")) {
+                                td.classList.add("positive");
+                            }
+                        }
+                    }
+                }
+
+                tr.appendChild(td);
+            });
 
             tbody.appendChild(tr);
         });
@@ -187,4 +197,5 @@ Module.register("MMM-StockPortfolio", {
 
         return table;
     }
+
 });
