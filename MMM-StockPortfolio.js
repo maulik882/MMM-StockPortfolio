@@ -154,6 +154,18 @@ Module.register("MMM-StockPortfolio", {
         stocks.forEach(stock => {
             const tr = document.createElement("tr");
 
+            // Extract performance indicator for the row
+            let isRowPositive = true;
+            const rowChangeKey = ["change", "change_percent", "p_l", "profit_loss"];
+            for (const key of rowChangeKey) {
+                const val = stock[key];
+                if (val && typeof val === "string" && val.includes("-")) {
+                    isRowPositive = false;
+                    break;
+                }
+            }
+            tr.classList.add(isRowPositive ? "row-positive" : "row-negative");
+
             columns.forEach(col => {
                 const td = document.createElement("td");
                 const key = this.getHeaderKey(col);
@@ -186,8 +198,10 @@ Module.register("MMM-StockPortfolio", {
                 }
 
                 if (key === "symbol") {
+                    td.classList.add("cell-symbol");
                     td.innerHTML = `<span class="stock-symbol bright">${stock.symbol}</span><br/><span class="stock-name xsmall dimmed">${stock.stock_name || stock.stockname || ""}</span>`;
                 } else {
+                    td.classList.add("cell-numerical");
                     td.innerText = value || "-";
 
                     // Handle P&L and Change coloring
@@ -196,8 +210,10 @@ Module.register("MMM-StockPortfolio", {
                         if (typeof value === "string") {
                             if (value.includes("-")) {
                                 td.classList.add("negative");
+                                td.innerHTML = `<span class="trend-icon down">▼</span> ${value}`;
                             } else if (value !== "0" && value !== "0%" && value !== "") {
                                 td.classList.add("positive");
+                                td.innerHTML = `<span class="trend-icon up">▲</span> ${value}`;
                             }
                         }
                     }
