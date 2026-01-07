@@ -158,30 +158,45 @@ Module.register("MMM-StockPortfolio", {
                 const td = document.createElement("td");
                 const key = this.getHeaderKey(col);
 
-                // Default mapping for common fields if not found by exact key
                 let value = stock[key];
 
-                // Handle special cases for fallback or mapping logic
+                // Comprehensive fallback mapping for various possible header names
+                if (value === undefined || value === "") {
+                    const fallbackMap = {
+                        "avg_buying_price": ["average_price", "avg_price", "buy_price", "buying_price", "average_buying_price", "avg_cost"],
+                        "current_price": ["current_value_per_share", "current_value", "last_price", "price", "current_rate", "cmp", "market_price"],
+                        "invest_amount": ["investment", "initial_investment", "invested", "total_investment", "invested_amount", "cost_basis"],
+                        "current_amount": ["current_value", "market_value", "total_value", "current_total_value", "valuation"],
+                        "change": ["change_percent", "change_", "percentage_change", "change_val"],
+                        "p_l": ["profit_loss", "profit_or_loss", "net_profit", "pnl", "gain_loss"]
+                    };
+
+                    // Try standard variations
+                    for (const masterKey in fallbackMap) {
+                        if (key.includes(masterKey) || masterKey.includes(key)) {
+                            for (const alt of fallbackMap[masterKey]) {
+                                if (stock[alt] !== undefined && stock[alt] !== "") {
+                                    value = stock[alt];
+                                    break;
+                                }
+                            }
+                        }
+                        if (value !== undefined && value !== "") break;
+                    }
+                }
+
                 if (key === "symbol") {
                     td.innerHTML = `<span class="stock-symbol bright">${stock.symbol}</span><br/><span class="stock-name xsmall dimmed">${stock.stock_name || stock.stockname || ""}</span>`;
                 } else {
-                    // Specific fallbacks for common alternative headers
-                    if (value === undefined || value === "") {
-                        if (key === "avg_price") value = stock["average_price"];
-                        if (key === "current") value = stock["current_value_per_share"] || stock["current_value"];
-                        if (key === "change") value = stock["change_percent"] || stock["change_"];
-                        if (key === "p_l") value = stock["profit_loss"] || stock["p_l"];
-                    }
-
                     td.innerText = value || "-";
 
-                    // Apply coloring for values that indicate change/performance
-                    if (typeof value === "string") {
-                        if (value.includes("-")) {
-                            td.classList.add("negative");
-                        } else if (value.includes("%") && value !== "0%" || (key.includes("change") || key.includes("p_l") || key.includes("profit")) && value !== "0" && value !== "") {
-                            // Basic heuristic for positive values
-                            if (!value.includes("-")) {
+                    // Handle P&L and Change coloring
+                    const lowerCol = col.toLowerCase();
+                    if (lowerCol.includes("change") || lowerCol.includes("p & l") || lowerCol.includes("p&l") || lowerCol.includes("profit")) {
+                        if (typeof value === "string") {
+                            if (value.includes("-")) {
+                                td.classList.add("negative");
+                            } else if (value !== "0" && value !== "0%" && value !== "") {
                                 td.classList.add("positive");
                             }
                         }
@@ -197,5 +212,4 @@ Module.register("MMM-StockPortfolio", {
 
         return table;
     }
-
 });
