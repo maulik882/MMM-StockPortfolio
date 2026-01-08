@@ -168,19 +168,25 @@ Module.register("MMM-StockPortfolio", {
 
             columns.forEach(col => {
                 const td = document.createElement("td");
-                const key = this.getHeaderKey(col);
+                let key = this.getHeaderKey(col);
+
+                // DIRECT ALIASING FOR USER PREFERENCES
+                if (key === "value") key = "current_amount";
+                if (key === "invested") key = "invest_amount";
+                if (key === "avg") key = "avg_buying_price";
+                if (key === "price") key = "current_price";
 
                 let value = stock[key];
 
                 // Comprehensive fallback mapping for various possible header names
                 if (value === undefined || value === "") {
                     const fallbackMap = {
-                        "avg_buying_price": ["average_price", "avg_cost", "avg_price", "buy_price", "buying_price"],
+                        "avg_buying_price": ["average_price", "avg_cost", "avg_price", "buy_price", "buying_price", "avg"],
                         "current_price": ["price_helper", "last_price", "price", "current_value_per_share", "cmp"],
-                        "invest_amount": ["investment", "invested", "initial_investment", "invested_amount"],
-                        "current_amount": ["current_value", "market_value", "total_value"],
-                        "change": ["change_percent", "change_", "percentage_change", "change_val"],
-                        "p_l": ["profit_loss", "profit_or_loss", "net_profit", "pnl", "gain_loss"]
+                        "invest_amount": ["investment", "invested", "initial_investment", "invested_amount", "invested"],
+                        "current_amount": ["current_value", "market_value", "total_value", "value", "current"],
+                        "change": ["change_percent", "change_", "percentage_change", "change_val", "change"],
+                        "p_l": ["profit_loss", "profit_or_loss", "net_profit", "pnl", "gain_loss", "p&l"]
                     };
 
                     // Try standard variations

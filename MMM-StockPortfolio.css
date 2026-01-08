@@ -237,3 +237,180 @@
 .stock-portfolio-wrapper {
     opacity: 1;
 }
+/* =========================================
+   ULTRA-PREMIUM STOCK PORTFOLIO (HUD INTERFACE)
+   ========================================= */
+
+/* 1. ANIMATED NEON PULSE (Enhanced) */
+@keyframes neonPulseGreen {
+  0% { text-shadow: 0 0 5px rgba(0, 255, 65, 0.4); }
+  50% { text-shadow: 0 0 15px rgba(0, 255, 65, 0.9), 0 0 8px rgba(255, 255, 255, 0.6); }
+  100% { text-shadow: 0 0 5px rgba(0, 255, 65, 0.4); }
+}
+
+@keyframes neonPulseRed {
+  0% { text-shadow: 0 0 5px rgba(255, 42, 42, 0.4); }
+  50% { text-shadow: 0 0 15px rgba(255, 42, 42, 0.9), 0 0 8px rgba(255, 255, 255, 0.6); }
+  100% { text-shadow: 0 0 5px rgba(255, 42, 42, 0.4); }
+}
+
+.MMM-StockPortfolio .positive {
+  color: #00ff41 !important;
+  font-family: 'Consolas', 'Monaco', monospace; /* Tech Font */
+  animation: neonPulseGreen 2.5s infinite alternate;
+}
+
+.MMM-StockPortfolio .negative {
+  color: #ff2a2a !important;
+  font-family: 'Consolas', 'Monaco', monospace; /* Tech Font */
+  animation: neonPulseRed 2.5s infinite alternate;
+}
+
+/* 2. HOLOGRAPHIC CHIPS WITH SHINE SWEEP */
+@keyframes shineSweep {
+  0% { background-position: -100% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.MMM-StockPortfolio .stock-symbol {
+  display: inline-block;
+  /* Glass + Shine Gradient */
+  background: linear-gradient(120deg, rgba(255,255,255,0.05) 30%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.05) 70%);
+  background-size: 200% 100%;
+  animation: shineSweep 4s infinite linear; /* Continuous shine sweep */
+  
+  padding: 4px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  
+  font-weight: 800;
+  font-size: 0.9em;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+/* 3. RGB ANIMATED BORDER CARDS */
+@keyframes borderRotate {
+  0% { border-color: rgba(0, 201, 255, 0.5); }
+  50% { border-color: rgba(146, 254, 157, 0.5); }
+  100% { border-color: rgba(0, 201, 255, 0.5); }
+}
+
+.MMM-StockPortfolio .summary-container {
+  gap: 15px; 
+}
+
+.MMM-StockPortfolio .summary-card {
+  position: relative;
+  background: rgba(10, 10, 15, 0.6); /* Slightly darker/richer base */
+  border-radius: 12px;
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(20px);
+  
+  /* Animated Border Color */
+  border: 2px solid rgba(255,255,255,0.1);
+  animation: borderRotate 4s infinite alternate;
+  
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.MMM-StockPortfolio .summary-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 15px 35px rgba(0, 255, 200, 0.15); /* Glow on hover */
+}
+
+/* Internal Glass Reflection overlay */
+.MMM-StockPortfolio .summary-card::before {
+  content: ' ';
+  position: absolute;
+  top: 0; left: -50%; width: 200%; height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.03), transparent);
+  transform: skewX(-25deg);
+  pointer-events: none;
+}
+
+.MMM-StockPortfolio .card-value {
+  font-family: 'Consolas', 'Monaco', monospace; /* Data Font */
+  font-size: 1.3em;
+  font-weight: 900;
+  margin-top: 8px;
+  color: #fff;
+  text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+
+/* 4. DATA TABLE - TECH ROW STYLING */
+.MMM-StockPortfolio tr {
+  transition: all 0.2s;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.MMM-StockPortfolio tr:hover {
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: inset 2px 0 0 #00C9FF; /* Selection Indicator Line */
+}
+
+.MMM-StockPortfolio td {
+  font-family: 'Consolas', 'Monaco', monospace; /* Alignment is perfect with mono */
+  font-size: 0.95em;
+  padding: 12px 6px !important; /* Taller touch targets */
+}
+
+/* 5. CRT SCANLINE OVERLAY */
+@keyframes scanlineMove {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+.MMM-StockPortfolio .stock-portfolio-wrapper {
+  position: relative;
+  overflow: hidden; /* Contain scanline */
+}
+
+.MMM-StockPortfolio .stock-portfolio-wrapper::after {
+  content: ' ';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  z-index: 2;
+  background-size: 100% 2px, 3px 100%;
+  pointer-events: none;
+}
+
+/* Moving Beam */
+.MMM-StockPortfolio .stock-portfolio-wrapper::before {
+  content: ' ';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(0deg, transparent 0%, rgba(32, 255, 77, 0.04) 50%, transparent 100%);
+  z-index: 3;
+  animation: scanlineMove 6s linear infinite;
+  pointer-events: none;
+}
+
+/* 6. ZEBRA STRIPING FOR ROW READABILITY */
+.MMM-StockPortfolio tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.MMM-StockPortfolio tr:nth-child(odd) {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* Ensure hover still pops */
+.MMM-StockPortfolio tr:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  box-shadow: inset 4px 0 0 #00C9FF; 
+  transform: scale(1.01); /* Subtle pop */
+}
+
