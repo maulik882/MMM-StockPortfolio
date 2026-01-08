@@ -1,289 +1,314 @@
 .stock-portfolio-wrapper {
-    padding: 5px;
-    font-family: 'Outfit', 'Inter', 'Roboto', -apple-system, sans-serif;
-    color: var(--color-text, #fff);
-    overflow: hidden;
-    font-size: 16px;
-    /* Base font size */
+  padding: 5px;
+  font-family: 'Outfit', 'Inter', 'Roboto', -apple-system, sans-serif;
+  color: var(--color-text, #fff);
+  overflow: hidden;
+  font-size: 16px;
+  /* Base font size */
 }
 
 /* Glassmorphism Summary Cards */
 .summary-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
 }
 
 .summary-card {
-    position: relative;
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-radius: 12px;
-    padding: 12px 8px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
-    text-align: center;
-    overflow: hidden;
+  position: relative;
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 12px;
+  padding: 12px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+  text-align: center;
+  overflow: hidden;
 }
 
 .summary-card:hover {
-    transform: translateY(-3px);
-    background: rgba(255, 255, 255, 0.08);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
 .card-label {
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
-    margin-bottom: 5px;
-    color: var(--color-text-dimmed, #888);
-    font-size: 0.58em;
-    font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  margin-bottom: 5px;
+  color: var(--color-text-dimmed, #888);
+  font-size: 0.58em;
+  font-weight: 500;
 }
 
 .card-value {
-    font-weight: 700;
-    font-size: 0.95em;
-    color: var(--color-text-bright, #fff);
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+  font-weight: 700;
+  font-size: 0.95em;
+  color: var(--color-text-bright, #fff);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
 }
 
 /* Performance Glow for Cards */
 .summary-card.change.positive {
-    box-shadow: inset 0 0 15px rgba(76, 209, 55, 0.05), 0 4px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 0 15px rgba(76, 209, 55, 0.05), 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .summary-card.change.negative {
-    box-shadow: inset 0 0 15px rgba(255, 71, 87, 0.05), 0 4px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 0 15px rgba(255, 71, 87, 0.05), 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 /* Table Design */
 .stock-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0 6px;
-    font-size: 0.78em;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 6px;
+  font-size: 0.78em;
 }
 
 .stock-table th {
-    text-align: left;
-    padding: 8px 10px;
-    color: var(--color-text-dimmed, #666) !important;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    white-space: nowrap;
+  text-align: left;
+  padding: 8px 10px;
+  color: var(--color-text-dimmed, #666) !important;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  white-space: nowrap;
 }
 
 .stock-table th.cell-numerical {
-    text-align: right;
+  text-align: right;
 }
 
 .stock-table td {
-    padding: 10px 10px;
-    background: rgba(255, 255, 255, 0.02);
-    color: var(--color-text, #ddd);
-    vertical-align: middle;
-    border-top: 1px solid rgba(255, 255, 255, 0.02);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+  padding: 10px 10px;
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--color-text, #ddd);
+  vertical-align: middle;
+  border-top: 1px solid rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.02);
 }
 
 /* Row-Level Performance Indicators (3px Bar) */
 .stock-table tr td:first-child {
-    position: relative;
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
-    padding-left: 15px;
+  position: relative;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  padding-left: 15px;
 }
 
 .stock-table tr.row-positive td:first-child::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 15%;
-    height: 70%;
-    width: 3px;
-    background: #4cd137;
-    border-radius: 0 4px 4px 0;
-    box-shadow: 2px 0 8px rgba(76, 209, 55, 0.4);
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 15%;
+  height: 70%;
+  width: 3px;
+  background: #4cd137;
+  border-radius: 0 4px 4px 0;
+  box-shadow: 2px 0 8px rgba(76, 209, 55, 0.4);
 }
 
 .stock-table tr.row-negative td:first-child::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 15%;
-    height: 70%;
-    width: 3px;
-    background: #ff4757;
-    border-radius: 0 4px 4px 0;
-    box-shadow: 2px 0 8px rgba(255, 71, 87, 0.4);
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 15%;
+  height: 70%;
+  width: 3px;
+  background: #ff4757;
+  border-radius: 0 4px 4px 0;
+  box-shadow: 2px 0 8px rgba(255, 71, 87, 0.4);
 }
 
 .stock-table tr td:last-child {
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
 }
 
 /* Alignment */
 .cell-numerical {
-    text-align: right !important;
-    font-variant-numeric: tabular-nums;
+  text-align: right !important;
+  font-variant-numeric: tabular-nums;
 }
 
 .stock-symbol {
-    font-weight: 700;
-    font-size: 1.1em;
-    color: var(--color-text-bright, #fff) !important;
-    letter-spacing: 0.5px;
+  font-weight: 700;
+  font-size: 1.1em;
+  color: var(--color-text-bright, #fff) !important;
+  letter-spacing: 0.5px;
 }
 
 .stock-name {
-    display: block;
-    margin-top: 2px;
-    color: var(--color-text-dimmed, #777);
-    font-size: 0.72em;
-    max-width: 100px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  display: block;
+  margin-top: 2px;
+  color: var(--color-text-dimmed, #777);
+  font-size: 0.72em;
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* Profit / Loss Colors & Glow */
 .positive {
-    color: #4cd137 !important;
-    font-weight: 600;
+  color: #4cd137 !important;
+  font-weight: 600;
 }
 
 .negative {
-    color: #ff4757 !important;
-    font-weight: 600;
+  color: #ff4757 !important;
+  font-weight: 600;
 }
 
 .trend-icon {
-    font-size: 0.8em;
-    margin-right: 2px;
-    vertical-align: middle;
+  font-size: 0.8em;
+  margin-right: 2px;
+  vertical-align: middle;
 }
 
 /* Premium Hover State */
 .stock-table tr:hover td {
-    background: rgba(255, 255, 255, 0.06);
-    color: var(--color-text-bright, #fff);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--color-text-bright, #fff);
 }
 
 /* Staggered Row Animation */
 @keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .stock-table tr {
-    animation: fadeInUp 0.5s ease backwards;
+  animation: fadeInUp 0.5s ease backwards;
 }
 
 /* Adjust animation delay for up to 10 rows */
 .stock-table tr:nth-child(1) {
-    animation-delay: 0.1s;
+  animation-delay: 0.1s;
 }
 
 .stock-table tr:nth-child(2) {
-    animation-delay: 0.15s;
+  animation-delay: 0.15s;
 }
 
 .stock-table tr:nth-child(3) {
-    animation-delay: 0.2s;
+  animation-delay: 0.2s;
 }
 
 .stock-table tr:nth-child(4) {
-    animation-delay: 0.25s;
+  animation-delay: 0.25s;
 }
 
 .stock-table tr:nth-child(5) {
-    animation-delay: 0.3s;
+  animation-delay: 0.3s;
 }
 
 .stock-table tr:nth-child(6) {
-    animation-delay: 0.35s;
+  animation-delay: 0.35s;
 }
 
 .stock-table tr:nth-child(7) {
-    animation-delay: 0.4s;
+  animation-delay: 0.4s;
 }
 
 .stock-table tr:nth-child(8) {
-    animation-delay: 0.45s;
+  animation-delay: 0.45s;
 }
 
 .stock-table tr:nth-child(9) {
-    animation-delay: 0.5s;
+  animation-delay: 0.5s;
 }
 
 .stock-table tr:nth-child(10) {
-    animation-delay: 0.55s;
+  animation-delay: 0.55s;
 }
 
 .stock-portfolio-wrapper {
-    opacity: 1;
+  opacity: 1;
 }
+
 /* =========================================
    ULTRA-PREMIUM STOCK PORTFOLIO (HUD INTERFACE)
    ========================================= */
 
 /* 1. ANIMATED NEON PULSE (Enhanced) */
 @keyframes neonPulseGreen {
-  0% { text-shadow: 0 0 5px rgba(0, 255, 65, 0.4); }
-  50% { text-shadow: 0 0 15px rgba(0, 255, 65, 0.9), 0 0 8px rgba(255, 255, 255, 0.6); }
-  100% { text-shadow: 0 0 5px rgba(0, 255, 65, 0.4); }
+  0% {
+    text-shadow: 0 0 5px rgba(0, 255, 65, 0.4);
+  }
+
+  50% {
+    text-shadow: 0 0 15px rgba(0, 255, 65, 0.9), 0 0 8px rgba(255, 255, 255, 0.6);
+  }
+
+  100% {
+    text-shadow: 0 0 5px rgba(0, 255, 65, 0.4);
+  }
 }
 
 @keyframes neonPulseRed {
-  0% { text-shadow: 0 0 5px rgba(255, 42, 42, 0.4); }
-  50% { text-shadow: 0 0 15px rgba(255, 42, 42, 0.9), 0 0 8px rgba(255, 255, 255, 0.6); }
-  100% { text-shadow: 0 0 5px rgba(255, 42, 42, 0.4); }
+  0% {
+    text-shadow: 0 0 5px rgba(255, 42, 42, 0.4);
+  }
+
+  50% {
+    text-shadow: 0 0 15px rgba(255, 42, 42, 0.9), 0 0 8px rgba(255, 255, 255, 0.6);
+  }
+
+  100% {
+    text-shadow: 0 0 5px rgba(255, 42, 42, 0.4);
+  }
 }
 
 .MMM-StockPortfolio .positive {
   color: #00ff41 !important;
-  font-family: 'Consolas', 'Monaco', monospace; /* Tech Font */
+  font-family: 'Consolas', 'Monaco', monospace;
+  /* Tech Font */
   animation: neonPulseGreen 2.5s infinite alternate;
 }
 
 .MMM-StockPortfolio .negative {
   color: #ff2a2a !important;
-  font-family: 'Consolas', 'Monaco', monospace; /* Tech Font */
+  font-family: 'Consolas', 'Monaco', monospace;
+  /* Tech Font */
   animation: neonPulseRed 2.5s infinite alternate;
 }
 
 /* 2. HOLOGRAPHIC CHIPS WITH SHINE SWEEP */
 @keyframes shineSweep {
-  0% { background-position: -100% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -100% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 .MMM-StockPortfolio .stock-symbol {
   display: inline-block;
   /* Glass + Shine Gradient */
-  background: linear-gradient(120deg, rgba(255,255,255,0.05) 30%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.05) 70%);
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.05) 30%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.05) 70%);
   background-size: 200% 100%;
-  animation: shineSweep 4s infinite linear; /* Continuous shine sweep */
-  
+  animation: shineSweep 4s infinite linear;
+  /* Continuous shine sweep */
+
   padding: 4px 10px;
   border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-  
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+
   font-weight: 800;
   font-size: 0.9em;
   letter-spacing: 1px;
@@ -293,52 +318,66 @@
 
 /* 3. RGB ANIMATED BORDER CARDS */
 @keyframes borderRotate {
-  0% { border-color: rgba(0, 201, 255, 0.5); }
-  50% { border-color: rgba(146, 254, 157, 0.5); }
-  100% { border-color: rgba(0, 201, 255, 0.5); }
+  0% {
+    border-color: rgba(0, 201, 255, 0.5);
+  }
+
+  50% {
+    border-color: rgba(146, 254, 157, 0.5);
+  }
+
+  100% {
+    border-color: rgba(0, 201, 255, 0.5);
+  }
 }
 
 .MMM-StockPortfolio .summary-container {
-  gap: 15px; 
+  gap: 15px;
 }
 
 .MMM-StockPortfolio .summary-card {
   position: relative;
-  background: rgba(10, 10, 15, 0.6); /* Slightly darker/richer base */
+  background: rgba(10, 10, 15, 0.6);
+  /* Slightly darker/richer base */
   border-radius: 12px;
   box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(20px);
-  
+
   /* Animated Border Color */
-  border: 2px solid rgba(255,255,255,0.1);
+  border: 2px solid rgba(255, 255, 255, 0.1);
   animation: borderRotate 4s infinite alternate;
-  
+
   overflow: hidden;
   transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .MMM-StockPortfolio .summary-card:hover {
   transform: translateY(-5px) scale(1.02);
-  box-shadow: 0 15px 35px rgba(0, 255, 200, 0.15); /* Glow on hover */
+  box-shadow: 0 15px 35px rgba(0, 255, 200, 0.15);
+  /* Glow on hover */
 }
 
 /* Internal Glass Reflection overlay */
 .MMM-StockPortfolio .summary-card::before {
   content: ' ';
   position: absolute;
-  top: 0; left: -50%; width: 200%; height: 100%;
-  background: linear-gradient(to right, transparent, rgba(255,255,255,0.03), transparent);
+  top: 0;
+  left: -50%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.03), transparent);
   transform: skewX(-25deg);
   pointer-events: none;
 }
 
 .MMM-StockPortfolio .card-value {
-  font-family: 'Consolas', 'Monaco', monospace; /* Data Font */
+  font-family: 'Consolas', 'Monaco', monospace;
+  /* Data Font */
   font-size: 1.3em;
   font-weight: 900;
   margin-top: 8px;
   color: #fff;
-  text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
 }
 
 /* 4. DATA TABLE - TECH ROW STYLING */
@@ -349,24 +388,33 @@
 
 .MMM-StockPortfolio tr:hover {
   background: rgba(255, 255, 255, 0.08);
-  box-shadow: inset 2px 0 0 #00C9FF; /* Selection Indicator Line */
+  box-shadow: inset 2px 0 0 #00C9FF;
+  /* Selection Indicator Line */
 }
 
 .MMM-StockPortfolio td {
-  font-family: 'Consolas', 'Monaco', monospace; /* Alignment is perfect with mono */
+  font-family: 'Consolas', 'Monaco', monospace;
+  /* Alignment is perfect with mono */
   font-size: 0.95em;
-  padding: 12px 6px !important; /* Taller touch targets */
+  padding: 12px 6px !important;
+  /* Taller touch targets */
 }
 
 /* 5. CRT SCANLINE OVERLAY */
 @keyframes scanlineMove {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(100%); }
+  0% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateY(100%);
+  }
 }
 
 .MMM-StockPortfolio .stock-portfolio-wrapper {
   position: relative;
-  overflow: hidden; /* Contain scanline */
+  overflow: hidden;
+  /* Contain scanline */
 }
 
 .MMM-StockPortfolio .stock-portfolio-wrapper::after {
@@ -398,19 +446,21 @@
   pointer-events: none;
 }
 
-/* 6. ZEBRA STRIPING FOR ROW READABILITY */
+/* 6. HOLOGRAPHIC ROW TINTS (Cyan/Magenta) */
 .MMM-StockPortfolio tr:nth-child(even) {
-  background: rgba(255, 255, 255, 0.02);
+  background: linear-gradient(90deg, rgba(0, 255, 255, 0.05) 0%, rgba(0, 0, 0, 0) 100%) !important;
+  border-left: 2px solid rgba(0, 255, 255, 0.3);
 }
 
 .MMM-StockPortfolio tr:nth-child(odd) {
-  background: rgba(0, 0, 0, 0.3);
+  background: linear-gradient(90deg, rgba(255, 0, 255, 0.05) 0%, rgba(0, 0, 0, 0) 100%) !important;
+  border-left: 2px solid rgba(255, 0, 255, 0.3);
 }
 
 /* Ensure hover still pops */
 .MMM-StockPortfolio tr:hover {
-  background: rgba(255, 255, 255, 0.08) !important;
-  box-shadow: inset 4px 0 0 #00C9FF; 
-  transform: scale(1.01); /* Subtle pop */
+  background: rgba(255, 255, 255, 0.1) !important;
+  box-shadow: inset 4px 0 0 #00C9FF;
+  transform: scale(1.01);
+  /* Subtle pop */
 }
-
